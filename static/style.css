@@ -1,0 +1,55 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Poppins', sans-serif;
+}
+
+
+body {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100vh;
+    background-color: rgb(245, 245, 245);
+
+}
+
+.image {
+    flex: 33.333%;
+    background-color: rgb(30, 41, 59);
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.image>img {
+    height: 300px;
+}
+
+
+.header {
+    flex: 66.666%;
+    box-sizing: border-box;
+    background-color: rgb(30, 41, 59);
+    color: white;
+    display: flex;
+    align-items: center;
+    padding-left: 10%;
+    font-size: 250%;
+}
+
+
+.header>h1 {
+    align-items: center;
+    justify-content: center;
+}

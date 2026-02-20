@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sklep</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="fonts" href="'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap'">
+</head>
+    <div class="image">
+        <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="" height="200px">
+    </div>
+
+    <div class="header">
+        <h1>Sklep Internetowy</h1>
+    </div>
+
+    <div class="menu-container">
+    <a class="menu" href="{{url_for('sklep')}}">
+        <div>
+            <h2>Strona glówna</h2>
+        </div>
+    </a>
+
+
+    <a class="koszyk" href="{{ url_for('koszyczek')}}">
+        <div>
+            <h2>Zamówienia</h2>
+        </div>
+
+    </a>
+
+    <a class="zaloguj" href="{{ url_for('login_page') }}">
+        <div>
+            <h2 id="zaloguj_konto"></h2>
+        </div>
+
+    </a>
+
+    
+<body>
+    
+</body>
+</html>
