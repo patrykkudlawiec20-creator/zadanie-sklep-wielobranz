@@ -40,6 +40,21 @@ class Produkty():
 
 
         return name_list, price_list, link_list
+    
+    def show_one(self, product):
+
+        produkt = self.products.find_one({"name": product})
+
+        name = product
+        description = 'Jakis tam bedzie opis na razie nic nie wiem. moze potem czy cos tqkiagpav0vivjiaba'
+        price = produkt['price']
+        active = produkt['active']
+        image = produkt['image']
+
+        return name, description, price, active, image
+
+        
+produkty = Produkty()
 
 
 

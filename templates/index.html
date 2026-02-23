@@ -38,7 +38,127 @@
 
     </a>
 
+    </div>
+
+    <div class="menu-container">
+    <a class="menu" href="{{ url_for('kategorie_stronka', category='electronics') }}">
+        <div>
+            <h2>Elektronika</h2>
+        </div>
+    </a>
+
     
+
+    <a  id="category" class="zaloguj" href="{{ url_for('kategorie_stronka', category='books') }}">
+        <div>
+            <h2>Ksiazki</h2>
+        </div>
+
+    </a>
+
+    <a id="category" class="zaloguj" href="{{ url_for('kategorie_stronka', category='shoes') }}">
+        <div>
+            <h2>Buty</h2>
+        </div>
+
+    </a>
+
+    <a id="category" class="zaloguj" href="{{ url_for('kategorie_stronka', category='clothing') }}">
+        <div>
+            <h2>Ubrania</h2>
+        </div>
+
+    </a>
+
+    <a id="category" class="zaloguj" href="{{ url_for('kategorie_stronka', category='dla_ciebie') }}">
+        <div>
+            <h2>Dla ciebie</h2>
+        </div>
+
+    </a>
+
+    </div>
+
+
+
+    <div class="wyszukaj">
+        <input type="text" placeholder="Wyszukaj..">
+    </div>
+
+
+    <div class="produkty" id="products-container">
+        {% for name, price, image in products %}
+        <div class="pos1">
+            <img src="{{ image }}" alt="Zdjecie produktu">
+            <h3>{{ name }}</h3>
+            <p>Cena: <strong>{{ price }}</strong></p>
+            <a class="link" href="{{ url_for('kupteraz', product=name) }}">
+            <div class="kup">
+                Sprawdź
+            </div>
+        </a>
+        </div>
+        {% endfor %}
+    </div>
+
+
+
+
+
+   <div class="site-footer">
+    <div class="footer-container">
+        <div class="footer-brand">
+            <h2 class="logo">TWOJA<span>MARKA</span></h2>
+            <p>Najlepsze doświadczenia zakupowe w sieci. Śledź nas i bądź na bieżąco z nowościami.</p>
+            <div class="social-icons">
+                <a href="#">FB</a> <a href="#">IG</a> <a href="#">LI</a>
+            </div>
+        </div>
+
+        <div class="footer-column">
+            <h3>Centrum Pomocy</h3>
+            <ul>
+                <li><a href="#">Śledzenie przesyłki</a></li>
+                <li><a href="#">Metody płatności</a></li>
+                <li><a href="#">Polityka zwrotów</a></li>
+                <li><a href="#">Reklamacje</a></li>
+                <li><a href="#">Bezpieczeństwo</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Karty i Prezenty</h3>
+            <ul>
+                <li><a href="#">Kup kartę podarunkową</a></li>
+                <li><a href="#">Sprawdź saldo karty</a></li>
+                <li><a href="#">Pomysł na prezent</a></li>
+                <li><a href="#">Newsletter dla stałych klientów</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>O nas</h3>
+            <ul>
+                <li><a href="#">Nasza historia</a></li>
+                <li><a href="#">Kariera</a></li>
+                <li><a href="#">Biuro prasowe</a></li>
+                <li><a href="#">Relacje inwestorskie</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2024 Twoja Marka S.A. Wszystkie prawa zastrzeżone.</p>
+        <div class="legal-links">
+            <a href="#">Regulamin</a>
+            <a href="#">Polityka prywatności</a>
+            <a href="#">Cookies</a>
+        </div>
+    </div>
+</div>
+
+
+    <script src="{{ url_for('static', filename='script.js')}}"></script>
 <body>
     
 </body>

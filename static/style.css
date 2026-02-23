@@ -53,3 +53,112 @@ body {
     align-items: center;
     justify-content: center;
 }
+
+.produkty {
+    flex: 0 0 100%;      
+    display: flex;        
+    flex-wrap: wrap;     
+    justify-content: center; 
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.pos1,
+.pos2,
+.pos3,
+.pos4,
+.pos5,
+.pos6 {
+    flex: 0 1 30.33%;
+    margin: 1.5%; 
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 200%;
+    padding-bottom: 3%;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+
+.pos1>img,
+.pos2>img,
+.pos3>img,
+.pos4>img,
+.pos5>img,
+.pos6>img {
+    width: 70%;
+    height: auto;
+    margin-top: 3%;
+}
+
+.pos1>p,
+.pos2>p,
+.pos3>p,
+.pos4>p,
+.pos5>p,
+.pos6>p {
+    margin-top: 2%;
+}
+
+
+.wyszukaj {
+    flex: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 7%;
+}
+
+.wyszukaj>input {
+    height: 70%;
+    width: 80%;
+    border-radius: 20px;
+    text-align: center;
+}
+
+input::placeholder {
+    color: black;
+    font-size: 170%;
+    font-family: 'Franklin Gothic Medium', sans-serif;
+}
+
+
+
+.kup {
+    margin-top: 2%;
+    padding: 13%;
+    padding-bottom: 7%;
+    padding-top: 7%;
+    border-radius: 10px;
+    font-size: 180%;
+    text-align: center;
+    background-color: rgb(249, 115, 22);
+    color: white;
+    font-weight: 600;
+}
+
+.link {
+    width: 40%;
+    text-decoration: none;
+}
+
+.koszyk,
+.zaloguj,
+.koszyk_koszyk {
+    text-decoration: none;
+    border: none;
+}
+
+
+
+.site-footer {
+    background-color:rgb(30, 41, 59);
+    color: #ffffff;
+    padding: 60px 20px 20px;
+    font-family: 'Segoe UI', sans-serif;
+    flex: 100%;
+}
