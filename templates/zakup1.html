@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zakup</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style5.css')}}">
+    <link rel="fonts" href="'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap'">
+</head>
+
+<body>
+    <div class="image">
+        <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="" height="200px">
+    </div>
+
+    <div class="header">
+        <h1>Sklep Internetowy</h1>
+    </div>
+
+    <a class="menu" href="{{url_for('sklep')}}">
+        <div>
+            <h2>Strona glówna</h2>
+        </div>
+    </a>
+
+    <a class="koszyk" href="{{ url_for('koszyczek')}}">
+        <div>
+            <h2>Zamówienia</h2>
+        </div>
+
+    </a>
+    <a class="zaloguj" href="{{ url_for('login_page') }}">
+        <div>
+            <h2>Zaloguj</h2>
+        </div>
+
+    </a>
+    <div class="podziekowania">
+        <h4>Dziękujemy za zakup: </h4>
+    </div>
+
+
+    <div class="pos1">
+        <img src="{{ image }}" alt="Zdjęcie {{ name }}">
+        <h3>{{ name }}</h3>
+        <p>Cena: <strong>{{ price }}</strong></p>
+        <p>Ilość: {{ quantity }}</p>
+    </div>
+
+
+    <div class="site-footer">
+    <div class="footer-container">
+        <div class="footer-brand">
+            <h2 class="logo">TWOJA<span>MARKA</span></h2>
+            <p>Najlepsze doświadczenia zakupowe w sieci. Śledź nas i bądź na bieżąco z nowościami.</p>
+            <div class="social-icons">
+                <a href="#">FB</a> <a href="#">IG</a> <a href="#">LI</a>
+            </div>
+        </div>
+
+        <div class="footer-column">
+            <h3>Centrum Pomocy</h3>
+            <ul>
+                <li><a href="#">Śledzenie przesyłki</a></li>
+                <li><a href="#">Metody płatności</a></li>
+                <li><a href="#">Polityka zwrotów</a></li>
+                <li><a href="#">Reklamacje</a></li>
+                <li><a href="#">Bezpieczeństwo</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Karty i Prezenty</h3>
+            <ul>
+                <li><a href="#">Kup kartę podarunkową</a></li>
+                <li><a href="#">Sprawdź saldo karty</a></li>
+                <li><a href="#">Pomysł na prezent</a></li>
+                <li><a href="#">Newsletter dla stałych klientów</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>O nas</h3>
+            <ul>
+                <li><a href="#">Nasza historia</a></li>
+                <li><a href="#">Kariera</a></li>
+                <li><a href="#">Biuro prasowe</a></li>
+                <li><a href="#">Relacje inwestorskie</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2024 Twoja Marka S.A. Wszystkie prawa zastrzeżone.</p>
+        <div class="legal-links">
+            <a href="#">Regulamin</a>
+            <a href="#">Polityka prywatności</a>
+            <a href="#">Cookies</a>
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+</html>
