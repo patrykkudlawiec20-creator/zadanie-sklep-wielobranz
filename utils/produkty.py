@@ -55,8 +55,3 @@ class Produkty():
 
         
 produkty = Produkty()
-
-
-
-
-produkty = Produkty()

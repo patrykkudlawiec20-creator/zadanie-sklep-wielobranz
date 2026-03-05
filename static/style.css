@@ -162,3 +162,111 @@ input::placeholder {
     font-family: 'Segoe UI', sans-serif;
     flex: 100%;
 }
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+}
+
+.footer-brand .logo {
+    font-size: 24px;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+.footer-brand span {
+    color: #ff4757; /* Akcent kolorystyczny */
+}
+
+.footer-brand p {
+    color: #a4a4a4;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.footer-column h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 12px;
+}
+
+.footer-column ul li a {
+    color: #a4a4a4;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-column ul li a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: #666;
+}
+
+.legal-links a {
+    color: #666;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+
+.menu-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.menu, .koszyk, .zaloguj, .koszyk_koszyk {
+    flex: 1 1 33%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(30, 41, 59);
+    color: white;
+    height: 80px;
+    margin: 2%;
+}
+
+h2 {
+    font-size: 170%;
+}
+
+h3 {
+    font-size: 170%;
+    margin-top: 2%;
+}
+
+p {
+    font-size: 120%;
+}
+
+
+.koszyk:hover,
+.menu:hover,
+.zaloguj:hover,
+.kup:hover,
+.koszyk_koszyk {
+    box-shadow: 5px 5px 10px black;
+    background-color: rgb(234, 88, 12);
+}
