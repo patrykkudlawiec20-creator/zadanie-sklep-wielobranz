@@ -68,7 +68,39 @@ def register_page():
     return render_template("rejestracja.html", msg=msg)
 
 
+@app.route('/kategorie/<category>', methods=["POST", "GET"])
+def kategorie_stronka(category):
 
+    if category == 'dla_ciebie':
+        
+        pass
+
+    name_list, price_list, image_list = produkty.show(category)
+
+
+    products = list(zip(name_list, price_list, image_list))
+
+
+    return render_template('kategorie_stronka.html', products=products, category=category)
+
+@app.route('/kupteraz/<product>', methods=["POST", "GET"])
+def kupteraz(product):
+
+    name, description, price, active, image = produkty.show_one(product)
+
+    return render_template("kupteraz1.html", name=name,
+                            description=description,
+                              peice=price,
+                                active=active,
+                                  image=image
+                           )
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+
+    return redirect(url_for('sklep'))
 
 
 if __name__ == "__main__":
