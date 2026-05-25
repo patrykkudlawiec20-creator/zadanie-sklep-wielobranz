@@ -1,29 +1,13 @@
-from pymongo import MongoClient
-from dotenv import load_dotenv
-import os
+from utils.db import db
 import datetime
-
-load_dotenv()
-KEY = os.getenv("MONGO_URI")
-client = MongoClient(KEY)
-
-try:
-    client.admin.command("ping")
-    print("Baza otwarta")
-
-except Exception as e:
-    print(f"Baza ma problem {e}")
-
 
 class Logowanie:
     def __init__(self):
-        
-        db = client["Sklep_filmy"]
         self.konta = db["users"]
 
     def zaloguj(self, login, haslo):     
         
-        # Sprawdzenie czy konto istnieje, zalogowanie, aktualizacja ostatniej daty logowanie, stworzenie secji
+    
 
         user = self.konta.find_one({"email": login})
         email = user['email']

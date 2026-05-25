@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="fonts" href="'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap'">
 </head>
+<body>
     <div class="image">
         <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="" height="200px">
     </div>
@@ -25,18 +26,16 @@
 
 
     <a class="koszyk" href="{{ url_for('koszyczek')}}">
-        <div>
-            <h2>Zamówienia</h2>
-        </div>
+    <div>
+        <h2>Zamówienia</h2>
+    </div>
+</a>
 
-    </a>
-
-    <a class="zaloguj" href="{{ url_for('login_page') }}">
-        <div>
-            <h2 id="zaloguj_konto"></h2>
-        </div>
-
-    </a>
+<a class="zaloguj" id="zaloguj" href="{{ url_for('login_page') }}">
+    <div>
+        <h2 id="zaloguj_konto"></h2>
+    </div>
+</a>
 
     </div>
 
@@ -87,19 +86,17 @@
 
 
     <div class="produkty" id="products-container">
-        {% for name, price, image in products %}
-        <div class="pos1">
-            <img src="{{ image }}" alt="Zdjecie produktu">
-            <h3>{{ name }}</h3>
-            <p>Cena: <strong>{{ price }}</strong></p>
-            <a class="link" href="{{ url_for('kupteraz', product=name) }}">
-            <div class="kup">
-                Sprawdź
-            </div>
+    {% for product in products %}
+    <div class="pos1">
+        <img src="{{ product.image }}" alt="Zdjecie produktu">
+        <h3>{{ product.name }}</h3>
+        <p>Cena: <strong>{{ product.price }}</strong> zł</p>
+        <a class="link" href="{{ url_for('kupteraz', product=product.name) }}">
+            <div class="kup">Sprawdź</div>
         </a>
-        </div>
-        {% endfor %}
     </div>
+    {% endfor %}
+</div>
 
 
 
@@ -159,7 +156,6 @@
 
 
     <script src="{{ url_for('static', filename='script.js')}}"></script>
-<body>
     
 </body>
 </html>

@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zamówienia</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+    <title>{{ category }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="fonts" href="'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap'">
 </head>
 
@@ -18,7 +18,6 @@
         <h1>Sklep Internetowy</h1>
     </div>
 
-
     <div class="menu-container">
     <a class="menu" href="{{url_for('sklep')}}">
         <div>
@@ -26,50 +25,45 @@
         </div>
     </a>
 
-    <div class="koszyk_koszyk">
-        <h2>Zamówienia</h2>
-    </div>
 
-    <a class="zaloguj" href="{{ url_for('login_page') }}">
+    <a class="koszyk" href="{{ url_for('koszyczek')}}">
+        <div>
+            <h2>Koszyk</h2>
+        </div>
+
+    </a>
+
+    <a class="zaloguj" id="zaloguj" href="{{ url_for('login_page') }}">
         <div>
             <h2 id="zaloguj_konto"></h2>
         </div>
 
     </a>
+
     </div>
 
 
-    <div class="koszyk-wrapper">
     <div class="produkty" id="products-container">
-    {% if products %}
-        {% for product in products %}
-            <div class="pos1" data-id="{{ product.id }}">
-                <img src="{{ product.image }}" alt="Zdjecie produktu">
-                <h3>{{ product.name }}</h3>
-                <p>Ilość: <strong>{{ product.quantity }}</strong></p>
-                <p>Cena: <strong>{{ product.price }}</strong> zł</p>
-                <button class="btn-usun" onclick="usunZKoszyka('{{ product.name }}')">Usuń</button>
-            </div>
-        {% endfor %}
-    {% else %}
-        <p class="pusty-koszyk">Twój koszyk jest pusty.</p>
-    {% endif %}
+    {% for product in products %}
+    <div class="pos1">
+        <img src="{{ product.image }}" alt="Zdjecie produktu">
+        <h3>{{ product.name }}</h3>
+        <p>Cena: <strong>{{ product.price }}</strong> zł</p>
+        <a class="link" href="{{ url_for('kupteraz', product=product.name) }}">
+            <div class="kup">Sprawdź</div>
+        </a>
     </div>
-
-    {% if products %}
-    <div class="podsumowanie-koszyka">
-        <h3>Podsumowanie zamówienia</h3>
-        <p>Razem do zapłaty: <strong id="calkowita-cena">{{ total_price }}</strong> zł</p>
-        <form action="{{ url_for('finalizuj_zakup') }}" method="POST">
-            <button type="submit" class="btn-kup">KUPUJĘ I PŁACĘ</button>
-        </form>
-    </div>
-    {% endif %}
+    {% endfor %}
 </div>
 
 
 
 
+
+    <div id="produkty_kategori"></div>
+
+
+    <div class="site-footer">
     <div class="footer-container">
         <div class="footer-brand">
             <h2 class="logo">TWOJA<span>MARKA</span></h2>
@@ -119,6 +113,7 @@
             <a href="#">Cookies</a>
         </div>
     </div>
+</div>
 
     <script src="{{ url_for('static', filename='script.js')}}"></script>
 </body>
