@@ -410,7 +410,24 @@ input:focus { border-color: #f97316; outline: none; box-shadow: 0 0 0 3px rgba(2
 }
 .btn-submit:hover { background: #ea580c; transform: translateY(-2px); }
 
+.sortowanie {
+    margin: 20px;
+    font-family: Arial, sans-serif;
+}
 
+.sortowanie select {
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+    outline: none;
+}
+
+.sortowanie select:hover {
+    border-color: #888;
+}
 
 
 @media (max-width: 768px) {

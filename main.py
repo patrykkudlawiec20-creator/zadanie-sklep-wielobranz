@@ -17,9 +17,17 @@ app.secret_key = SESSION_KEY
 
 @app.route("/")
 def sklep():
-
     products = produkty.show_all()
-    return render_template('index.html', products=products)
+    
+
+    sort_by = request.args.get('sort')
+
+    if sort_by == 'asc':
+        products = sorted(products, key=lambda x: float(x.get('price', 0) if isinstance(x, dict) else x[2]))
+    elif sort_by == 'desc':
+        products = sorted(products, key=lambda x: float(x.get('price', 0) if isinstance(x, dict) else x[2]), reverse=True)
+
+    return render_template('index.html', products=products, current_sort=sort_by)
 
 @app.route("/api/user")
 def api_user():
@@ -68,15 +76,53 @@ def register_page():
     return render_template("rejestracja.html", msg=msg)
 
 
+
+import re
+
+@app.route('/wyszukaj', methods=['GET'])
+def wyszukaj_produkt():
+    query = request.args.get('query', '').strip()
+    
+    if not query:
+        return redirect(url_for('sklep'))
+
+  
+    znaleziony_produkt = db.products.find_one({
+        "name": {"$regex": re.escape(query), "$options": "i"}
+    })
+
+    if znaleziony_produkt:
+       
+        return redirect(url_for('kupteraz', product=znaleziony_produkt['name']))
+    else:
+       
+        products = produkty.show_all()
+        return render_template('index.html', products=products)
+    
+
 @app.route('/kategorie/<category>', methods=["POST", "GET"])
 def kategorie_stronka(category):
-
     if category == 'dla_ciebie':
-        
         pass
 
     products = produkty.show(category)
-    return render_template('kategorie_stronka.html', products=products, category=category)
+    sort_by = request.args.get('sort')
+
+  
+    def get_price(item):
+        try:
+         
+            price_val = str(item.get('price', 0)).replace('zł', '').strip()
+            return float(price_val)
+        except (ValueError, TypeError):
+            return 0.0
+
+    if sort_by == 'asc':
+        products = sorted(products, key=get_price)
+    elif sort_by == 'desc':
+        products = sorted(products, key=get_price, reverse=True)
+
+    return render_template('kategoria_stronka.html', products=products, category=category, current_sort=sort_by)
 
 @app.route('/kupteraz/<product>', methods=["POST", "GET"])
 def kupteraz(product):

@@ -42,6 +42,15 @@
 
     </div>
 
+    <div class="sortowanie">
+    <label for="sort-select">Sortuj po cenie:</label>
+    <select id="sort-select" onchange="location = this.value;">
+        <option value="{{ url_for('kategorie_stronka', category=category) }}" {% if not current_sort %}selected{% endif %}>Domyślnie</option>
+        <option value="{{ url_for('kategorie_stronka', category=category, sort='asc') }}" {% if current_sort == 'asc' %}selected{% endif %}>Od najtańszego</option>
+        <option value="{{ url_for('kategorie_stronka', category=category, sort='desc') }}" {% if current_sort == 'desc' %}selected{% endif %}>Od najdroższego</option>
+    </select>
+</div>
+
 
     <div class="produkty" id="products-container">
     {% for product in products %}
@@ -56,11 +65,6 @@
     {% endfor %}
 </div>
 
-
-
-
-
-    <div id="produkty_kategori"></div>
 
 
     <div class="site-footer">

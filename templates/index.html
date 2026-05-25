@@ -81,9 +81,19 @@
 
 
     <div class="wyszukaj">
-        <input type="text" placeholder="Wyszukaj..">
-    </div>
+    <form action="{{ url_for('wyszukaj_produkt') }}" method="GET">
+        <input type="text" name="query" placeholder="Wyszukaj.." required>
+    </form>
+</div>
 
+    <div class="sortowanie">
+    <label for="sort-select">Sortuj po cenie:</label>
+    <select id="sort-select" onchange="location = this.value;">
+        <option value="{{ url_for('sklep') }}" {% if not current_sort %}selected{% endif %}>Domyślnie</option>
+        <option value="{{ url_for('sklep', sort='asc') }}" {% if current_sort == 'asc' %}selected{% endif %}>Od najtańszego</option>
+        <option value="{{ url_for('sklep', sort='desc') }}" {% if current_sort == 'desc' %}selected{% endif %}>Od najdroższego</option>
+    </select>
+</div>
 
     <div class="produkty" id="products-container">
     {% for product in products %}
