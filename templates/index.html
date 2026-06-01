@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sklep</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="fonts" href="'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap'">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap">
 </head>
+
 <body>
     <div class="image">
-        <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="" height="200px">
+        <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="Logo">
     </div>
 
     <div class="header">
@@ -18,154 +19,138 @@
     </div>
 
     <div class="menu-container">
-    <a class="menu" href="{{url_for('sklep')}}">
-        <div>
-            <h2>Strona glówna</h2>
-        </div>
-    </a>
+        <a class="menu" href="{{url_for('sklep')}}">
+            <div>
+                <h2>Strona główna</h2>
+            </div>
+        </a>
 
+        <a class="koszyk" href="{{ url_for('koszyczek')}}">
+            <div>
+                <h2>Zamówienia</h2>
+            </div>
+        </a>
 
-    <a class="koszyk" href="{{ url_for('koszyczek')}}">
-    <div>
-        <h2>Zamówienia</h2>
-    </div>
-</a>
-
-<a class="zaloguj" id="zaloguj" href="{{ url_for('login_page') }}">
-    <div>
-        <h2 id="zaloguj_konto"></h2>
-    </div>
-</a>
-
+        <a class="zaloguj" id="zaloguj" href="{{ url_for('login_page') }}">
+            <div>
+                <h2 id="zaloguj_konto"></h2>
+            </div>
+        </a>
     </div>
 
     <div class="menu-container">
-    <a class="menu" href="{{ url_for('kategorie_stronka', category='electronics') }}">
-        <div>
-            <h2>Elektronika</h2>
-        </div>
-    </a>
+        <a class="menu" href="{{ url_for('kategorie_stronka', category='electronics') }}">
+            <div>
+                <h2>Elektronika</h2>
+            </div>
+        </a>
 
-    
+        <a id="category-books" class="zaloguj" href="{{ url_for('kategorie_stronka', category='books') }}">
+            <div>
+                <h2>Książki</h2>
+            </div>
+        </a>
 
-    <a  id="category" class="zaloguj" href="{{ url_for('kategorie_stronka', category='books') }}">
-        <div>
-            <h2>Ksiazki</h2>
-        </div>
+        <a id="category-shoes" class="zaloguj" href="{{ url_for('kategorie_stronka', category='shoes') }}">
+            <div>
+                <h2>Buty</h2>
+            </div>
+        </a>
 
-    </a>
+        <a id="category-clothing" class="zaloguj" href="{{ url_for('kategorie_stronka', category='clothing') }}">
+            <div>
+                <h2>Ubrania</h2>
+            </div>
+        </a>
 
-    <a id="category" class="zaloguj" href="{{ url_for('kategorie_stronka', category='shoes') }}">
-        <div>
-            <h2>Buty</h2>
-        </div>
-
-    </a>
-
-    <a id="category" class="zaloguj" href="{{ url_for('kategorie_stronka', category='clothing') }}">
-        <div>
-            <h2>Ubrania</h2>
-        </div>
-
-    </a>
-
-    <a id="category" class="zaloguj" href="{{ url_for('kategorie_stronka', category='dla_ciebie') }}">
-        <div>
-            <h2>Dla ciebie</h2>
-        </div>
-
-    </a>
-
-    </div>
-
-
-
-    <div class="wyszukaj">
-    <form action="{{ url_for('wyszukaj_produkt') }}" method="GET">
-        <input type="text" name="query" placeholder="Wyszukaj.." required>
-    </form>
-</div>
-
-    <div class="sortowanie">
-    <label for="sort-select">Sortuj po cenie:</label>
-    <select id="sort-select" onchange="location = this.value;">
-        <option value="{{ url_for('sklep') }}" {% if not current_sort %}selected{% endif %}>Domyślnie</option>
-        <option value="{{ url_for('sklep', sort='asc') }}" {% if current_sort == 'asc' %}selected{% endif %}>Od najtańszego</option>
-        <option value="{{ url_for('sklep', sort='desc') }}" {% if current_sort == 'desc' %}selected{% endif %}>Od najdroższego</option>
-    </select>
-</div>
-
-    <div class="produkty" id="products-container">
-    {% for product in products %}
-    <div class="pos1">
-        <img src="{{ product.image }}" alt="Zdjecie produktu">
-        <h3>{{ product.name }}</h3>
-        <p>Cena: <strong>{{ product.price }}</strong> zł</p>
-        <a class="link" href="{{ url_for('kupteraz', product=product.name) }}">
-            <div class="kup">Sprawdź</div>
+        <a id="category-foryou" class="zaloguj" href="{{ url_for('kategorie_stronka', category='dla_ciebie') }}">
+            <div>
+                <h2>Dla ciebie</h2>
+            </div>
         </a>
     </div>
-    {% endfor %}
-</div>
 
+    <div class="wyszukaj">
+        <form action="{{ url_for('wyszukaj_produkt') }}" method="GET">
+            <input type="text" name="query" placeholder="Wyszukaj produkt..." required>
+        </form>
+    </div>
 
+    <div class="sortowanie">
+        <label for="sort-select">Sortuj po cenie:</label>
+        <select id="sort-select" onchange="location = this.value;">
+            <option value="{{ url_for('sklep') }}" {% if not current_sort %}selected{% endif %}>Domyślnie</option>
+            <option value="{{ url_for('sklep', sort='asc') }}" {% if current_sort == 'asc' %}selected{% endif %}>Od najtańszego</option>
+            <option value="{{ url_for('sklep', sort='desc') }}" {% if current_sort == 'desc' %}selected{% endif %}>Od najdroższego</option>
+        </select>
+    </div>
 
+    <div class="produkty" id="products-container">
+        {% for product in products %}
+        <div class="pos1">
+            <img src="{{ product.image }}" alt="Zdjęcie produktu">
+            <h3>{{ product.name }}</h3>
+            <p>Cena: <strong>{{ product.price }}</strong> zł</p>
+            <a class="link" href="{{ url_for('kupteraz', product=product.name) }}">
+                <div class="kup">Sprawdź</div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
 
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h2 class="logo">TWOJA<span>MARKA</span></h2>
+                <p>Najlepsze doświadczenia zakupowe w sieci. Śledź nas i bądź na bieżąco z nowościami.</p>
+                <div class="social-icons">
+                    <a href="#">FB</a> <a href="#">IG</a> <a href="#">LI</a>
+                </div>
+            </div>
 
-   <div class="site-footer">
-    <div class="footer-container">
-        <div class="footer-brand">
-            <h2 class="logo">TWOJA<span>MARKA</span></h2>
-            <p>Najlepsze doświadczenia zakupowe w sieci. Śledź nas i bądź na bieżąco z nowościami.</p>
-            <div class="social-icons">
-                <a href="#">FB</a> <a href="#">IG</a> <a href="#">LI</a>
+            <div class="footer-column">
+                <h3>Centrum Pomocy</h3>
+                <ul>
+                    <li><a href="#">Śledzenie przesyłki</a></li>
+                    <li><a href="#">Metody płatności</a></li>
+                    <li><a href="#">Polityka zwrotów</a></li>
+                    <li><a href="#">Reklamacje</a></li>
+                    <li><a href="#">Bezpieczeństwo</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Karty i Prezenty</h3>
+                <ul>
+                    <li><a href="#">Kup kartę podarunkową</a></li>
+                    <li><a href="#">Sprawdź saldo karty</a></li>
+                    <li><a href="#">Pomysł na prezent</a></li>
+                    <li><a href="#">Newsletter dla stałych klientów</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>O nas</h3>
+                <ul>
+                    <li><a href="#">Nasza historia</a></li>
+                    <li><a href="#">Kariera</a></li>
+                    <li><a href="#">Biuro prasowe</a></li>
+                    <li><a href="#">Relacje inwestorskie</a></li>
+                </ul>
             </div>
         </div>
 
-        <div class="footer-column">
-            <h3>Centrum Pomocy</h3>
-            <ul>
-                <li><a href="#">Śledzenie przesyłki</a></li>
-                <li><a href="#">Metody płatności</a></li>
-                <li><a href="#">Polityka zwrotów</a></li>
-                <li><a href="#">Reklamacje</a></li>
-                <li><a href="#">Bezpieczeństwo</a></li>
-            </ul>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Twoja Marka S.A. Wszystkie prawa zastrzeżone.</p>
+            <div class="legal-links">
+                <a href="#">Regulamin</a>
+                <a href="#">Polityka prywatności</a>
+                <a href="#">Cookies</a>
+            </div>
         </div>
-
-        <div class="footer-column">
-            <h3>Karty i Prezenty</h3>
-            <ul>
-                <li><a href="#">Kup kartę podarunkową</a></li>
-                <li><a href="#">Sprawdź saldo karty</a></li>
-                <li><a href="#">Pomysł na prezent</a></li>
-                <li><a href="#">Newsletter dla stałych klientów</a></li>
-            </ul>
-        </div>
-
-        <div class="footer-column">
-            <h3>O nas</h3>
-            <ul>
-                <li><a href="#">Nasza historia</a></li>
-                <li><a href="#">Kariera</a></li>
-                <li><a href="#">Biuro prasowe</a></li>
-                <li><a href="#">Relacje inwestorskie</a></li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="footer-bottom">
-        <p>&copy; 2024 Twoja Marka S.A. Wszystkie prawa zastrzeżone.</p>
-        <div class="legal-links">
-            <a href="#">Regulamin</a>
-            <a href="#">Polityka prywatności</a>
-            <a href="#">Cookies</a>
-        </div>
-    </div>
-</div>
-
+    </footer>
 
     <script src="{{ url_for('static', filename='script.js')}}"></script>
-    
 </body>
+
 </html>
