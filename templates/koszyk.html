@@ -46,7 +46,15 @@
             <div class="pos1" data-id="{{ product.id }}">
                 <img src="{{ product.image }}" alt="Zdjecie produktu">
                 <h3>{{ product.name }}</h3>
-                <p>Ilość: <strong>{{ product.quantity }}</strong></p>
+                
+                <p>Ilość: 
+                    <input type="number" 
+                        value="{{ product.quantity }}" 
+                        min="1" 
+                        style="width: 50px; padding: 3px; text-align: center;"
+                        onchange="zmienIlosc('{{ product.name }}', this.value)">
+                </p>
+                
                 <p>Cena: <strong>{{ product.price }}</strong> zł</p>
                 <button class="btn-usun" onclick="usunZKoszyka('{{ product.name }}')">Usuń</button>
             </div>
@@ -57,14 +65,48 @@
     </div>
 
     {% if products %}
-    <div class="podsumowanie-koszyka">
-        <h3>Podsumowanie zamówienia</h3>
-        <p>Razem do zapłaty: <strong id="calkowita-cena">{{ total_price }}</strong> zł</p>
-        <form action="{{ url_for('finalizuj_zakup') }}" method="POST">
-            <button type="submit" class="btn-kup">KUPUJĘ I PŁACĘ</button>
-        </form>
-    </div>
-    {% endif %}
+<div class="podsumowanie-koszyka">
+    <h3>Podsumowanie zamówienia</h3>
+    <p class="cena-razem">Razem do zapłaty: <strong id="calkowita-cena">{{ total_price }}</strong> zł</p>
+    
+    <form action="{{ url_for('finalizuj_zakup') }}" method="POST" class="formularz-zamowienia">
+        
+        <div class="sekcja-formularza">
+            <h4>Dane klienta</h4>
+            <input type="text" name="imie_nazwisko" placeholder="Imię i Nazwisko" required>
+            <input type="email" name="email_kontakt" placeholder="Adres E-mail" required>
+            <input type="tel" name="telefon" placeholder="Numer telefonu" required>
+        </div>
+
+        <div class="sekcja-formularza">
+            <h4>Adres dostawy</h4>
+            <input type="text" name="ulica" placeholder="Ulica i numer domu/mieszkania" required>
+            <div class="kod-miasto">
+                <input type="text" name="kod_pocztowy" placeholder="Kod pocztowy" pattern="[0-9]{2}-[0-9]{3}" title="Format: 00-000" style="width: 40%;" required>
+                <input type="text" name="miasto" placeholder="Miasto" style="width: 55%;" required>
+            </div>
+        </div>
+
+        <div class="sekcja-formularza">
+            <h4>Metoda dostawy</h4>
+            <label class="opcja-dostawy">
+                <input type="radio" name="dostawa" value="kurier" checked>
+                <span>Kurier DPD / DHL (+15.00 zł)</span>
+            </label>
+            <label class="opcja-dostawy">
+                <input type="radio" name="dostawa" value="paczkomat">
+                <span>Paczkomat InPost (+12.00 zł)</span>
+            </label>
+            <label class="opcja-dostawy">
+                <input type="radio" name="dostawa" value="odbior">
+                <span>Odbiór osobisty (0.00 zł)</span>
+            </label>
+        </div>
+
+                <button type="submit" class="btn-kup">KUPUJĘ I PŁACĘ</button>
+            </form>
+        </div>
+{% endif %}
 </div>
 
 

@@ -184,9 +184,21 @@ def finalizuj_zakup():
     if not user_id:
         return redirect(url_for('login_page'))
 
+
+    klient = request.form.get('imie_nazwisko', 'Kliencie')
+    metoda_dostawy = request.form.get('dostawa', 'kurier')
+
+
+    dostawy_slownik = {
+        "kurier": "Kurierem (DPD/DHL)",
+        "paczkomat": "do Paczkomatu InPost",
+        "odbior": "Odbiór osobisty"
+    }
+    wybrana_wysylka = dostawy_slownik.get(metoda_dostawy, "Kurierem")
+
     now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-4]
 
-  
+
     db.orders.update_many(
         {"user_id": user_id, "status": "delive"},
         {
@@ -197,7 +209,10 @@ def finalizuj_zakup():
         }
     )
 
-    return render_template('zakup1.html', message="Dziękujemy za udane zakupy!")
+
+    komunikat = f"Dziękujemy za udane zakupy, {klient}! Twoje zamówienie zostanie dostarczone sposbem: {wybrana_wysylka}."
+    
+    return render_template('zakup1.html', message=komunikat)
 
 
 @app.route('/api/koszyk/usun', methods=['POST'])
@@ -294,6 +309,31 @@ def get_user_history():
 @app.route("/konto")
 def konto():
     return render_template('konto.html')
+
+
+@app.route('/api/koszyk/zmien_ilosc', methods=['POST'])
+def zmien_ilosc_w_koszyku():
+    user_id = session.get('user_id') or session.get('email')
+    if not user_id:
+        return jsonify({"error": "Niezalogowany"}), 401
+
+    data = request.get_json()
+    product_name = data.get('name')
+    new_quantity = data.get('quantity')
+
+    
+    db.orders.update_one(
+        {
+            "user_id": user_id,
+            "status": "delive",
+            "items.name": product_name
+        },
+        {
+            "$set": { "items.$.quantity": int(new_quantity) }
+        }
+    )
+
+    return jsonify({"success": True}), 200
 
 
 if __name__ == "__main__":

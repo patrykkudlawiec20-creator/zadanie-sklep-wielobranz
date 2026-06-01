@@ -64,3 +64,26 @@ async function usunZKoszyka(productName) {
         }
     }
 }
+
+async function zmienIlosc(productName, newQuantity) {
+    if (parseInt(newQuantity) < 1) {
+        alert("Ilość nie może być mniejsza niż 1.");
+        window.location.reload();
+        return;
+    }
+
+    const response = await fetch("/api/koszyk/zmien_ilosc", {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            name: productName, 
+            quantity: parseInt(newQuantity) 
+        })
+    });
+
+    if (response.ok) {
+        window.location.reload();
+    } else {
+        alert("Wystąpił błąd podczas zmiany ilości produktu.");
+    }
+}
