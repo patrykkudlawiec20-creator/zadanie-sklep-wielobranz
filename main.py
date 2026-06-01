@@ -42,15 +42,19 @@ def login_page():
     msg = ""
     try:
         if request.method == "POST":
-            login_val = request.form["login"]
-            haslo_val = request.form["haslo"]
+            login_val = request.form.get("login", "").strip()
+            haslo_val = request.form.get("haslo", "").strip()
+            
+           
+            if not login_val or not haslo_val:
+                msg = "Wszystkie pola są wymagane!"
+                return render_template("login.html", msg=msg)
+
             msg, user_id, email = logowanie.zaloguj(login_val, haslo_val)
 
             if msg == "Zalogowano pomyślnie":
-
                 session['user_id'] = str(user_id)
                 session['email'] = email
-
                 return redirect(url_for('sklep'))
     except Exception as e:
         print(e)
@@ -62,16 +66,24 @@ def login_page():
 
 @app.route("/register", methods=["GET", "POST"])
 def register_page():
-    msg=''
+    msg = ''
     if request.method == "POST":
         try:
-            login_val = request.form["login"]
-            haslo_val = request.form["haslo"]
+            login_val = request.form.get("login", "").strip()
+            haslo_val = request.form.get("haslo", "").strip()
+            
+     
+            if len(login_val) < 3:
+                msg = "Login musi mieć co najmniej 3 znaki!"
+                return render_template("rejestracja.html", msg=msg)
+            if len(haslo_val) < 6:
+                msg = "Hasło musi mieć co najmniej 6 znaków!"
+                return render_template("rejestracja.html", msg=msg)
+
             msg = logowanie.zarejestruj(login_val, haslo_val)
         except Exception as e:
             print(e)
             msg = "Blad rejestracji. Spróbuj ponownie"
-
     
     return render_template("rejestracja.html", msg=msg)
 
@@ -184,10 +196,18 @@ def finalizuj_zakup():
     if not user_id:
         return redirect(url_for('login_page'))
 
-
-    klient = request.form.get('imie_nazwisko', 'Kliencie')
+    klient = request.form.get('imie_nazwisko', '').strip()
     metoda_dostawy = request.form.get('dostawa', 'kurier')
+    adres = request.form.get('adres', '').strip()
+    kod_pocztowy = request.form.get('kod_pocztowy', '').strip()
 
+
+    if len(klient) < 5:
+        return render_template('zakup1.html', message="Błąd: Imię i nazwisko muszą mieć min. 5 znaków.")
+    if not adres:
+        return render_template('zakup1.html', message="Błąd: Adres dostawy jest wymagany.")
+    if not re.match(r"^\d{2}-\d{3}$", kod_pocztowy):
+        return render_template('zakup1.html', message="Błąd: Nieprawidłowy format kodu pocztowego (wymagany XX-XXX).")
 
     dostawy_slownik = {
         "kurier": "Kurierem (DPD/DHL)",
@@ -195,9 +215,7 @@ def finalizuj_zakup():
         "odbior": "Odbiór osobisty"
     }
     wybrana_wysylka = dostawy_slownik.get(metoda_dostawy, "Kurierem")
-
     now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-4]
-
 
     db.orders.update_many(
         {"user_id": user_id, "status": "delive"},
@@ -209,9 +227,7 @@ def finalizuj_zakup():
         }
     )
 
-
-    komunikat = f"Dziękujemy za udane zakupy, {klient}! Twoje zamówienie zostanie dostarczone sposbem: {wybrana_wysylka}."
-    
+    komunikat = f"Dziękujemy za udane zakupy, {klient}! Twoje zamówienie zostanie dostarczone sposobem: {wybrana_wysylka}."
     return render_template('zakup1.html', message=komunikat)
 
 
