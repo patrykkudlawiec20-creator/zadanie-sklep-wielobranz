@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admina</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="header">
+        <h1>Panel Administracyjny</h1>
+        <a href="{{ url_for('admin_logout') }}" style="color: #f97316; font-weight: bold; text-decoration: underline;">Wyloguj się</a>
+    </div>
+
+    <div class="koszyk-wrapper" style="margin-top: 30px;">
+        <div class="podsumowanie-koszyka">
+            <h3>Dodaj nowy produkt</h3>
+            <form method="POST" class="formularz-zamowienia">
+                <div class="sekcja-formularza">
+                    <input type="text" name="name" placeholder="Nazwa produktu" required>
+                    <input type="text" name="price" placeholder="Cena (np. 29.99)" required>
+                    <input type="text" name="image" placeholder="URL obrazka (np. /static/img/produkt.jpg)" required>
+                    
+                    <label style="font-size: 0.9rem; font-weight: 600; color: #334155;">Kategoria:</label>
+                    <select name="category" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; background: white;">
+                        <option value="electronics">Elektronika</option>
+                        <option value="books">Książki</option>
+                        <option value="shoes">Buty</option>
+                        <option value="clothing">Ubrania</option>
+                        <option value="dla_ciebie">Dla ciebie</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-kup">DODAJ PRODUKT</button>
+            </form>
+        </div>
+
+        <div class="podsumowanie-koszyka">
+            <h3>Zarządzaj produktami</h3>
+            <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 15px;">
+                {% for product in products %}
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #e2e8f0;">
+                    <div>
+                        <strong style="color: #0f172a;">{{ product.name }}</strong> - {{ product.price }} zł
+                        <br><span style="font-size: 0.8rem; color: #64748b;">Kategoria: {{ product.category }}</span>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <a href="{{ url_for('admin_edit', product_id=product.id) }}" class="kup" style="padding: 6px 12px; font-size: 0.85rem; border-radius: 6px; width: auto;">Edytuj</a>
+                        
+                        <form action="{{ url_for('admin_delete', product_id=product.id) }}" method="POST" onsubmit="return confirm('Czy na pewno chcesz usunąć ten produkt?');" style="margin: 0;">
+                            <button type="submit" class="btn-usun" style="margin: 0; padding: 6px 12px; font-size: 0.85rem; border-radius: 6px; width: auto;">Usuń</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

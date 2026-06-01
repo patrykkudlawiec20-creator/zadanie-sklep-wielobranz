@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logowanie Admina</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="header">
+        <h1>Panel Logowania Administratora</h1>
+    </div>
+
+    <div class="content-wrapper" style="max-width: 500px; margin: 50px auto;">
+        <div class="podsumowanie-koszyka">
+            <h3>Zaloguj się</h3>
+            
+            {% with messages = get_flashed_messages(category_filter=['error']) %}
+                {% if messages %}
+                    <p style="color: #ef4444; margin-bottom: 15px; font-weight: 600;">{{ messages[0] }}</p>
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" class="formularz-zamowienia">
+                <div class="sekcja-formularza">
+                    <input type="text" name="username" placeholder="Login admina" required>
+                    <input type="password" name="password" placeholder="Hasło" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; outline: none;" required>
+                </div>
+                <button type="submit" class="btn-kup">ZALOGUJ</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

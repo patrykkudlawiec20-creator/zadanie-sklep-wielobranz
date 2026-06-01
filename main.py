@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from utils.produkty import produkty
 from utils.logowanie import logowanie
 from utils.koszyk import koszyk
@@ -139,8 +139,8 @@ def kupteraz(product):
 
 @app.route("/logout")
 def logout():
-    session.clear()
-
+    session.pop('user_id', None)
+    session.pop('email', None)
     return redirect(url_for('sklep'))
 
 @app.route('/Koszyczek', methods=['GET', 'POST'])
@@ -335,6 +335,70 @@ def zmien_ilosc_w_koszyku():
 
     return jsonify({"success": True}), 200
 
+ADMIN_USERNAME = "admin"
+ADMIN_PASSWORD = "admin123"
+
+@app.route('/admin/login', methods=['GET', 'POST'])
+def admin_login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        
+        if username == ADMIN_USERNAME and password == ADMIN_PASSWORD:
+            session['is_admin'] = True
+            return redirect(url_for('admin_panel'))
+        else:
+            flash('Błędny login lub hasło!', 'error')
+            
+    return render_template('admin_login.html')
+
+@app.route('/admin', methods=['GET', 'POST'])
+def admin_panel():
+    if not session.get('is_admin'):
+        return redirect(url_for('admin_login'))
+        
+    if request.method == 'POST':
+        name = request.form.get('name')
+        price = request.form.get('price')
+        image = request.form.get('image')
+        category = request.form.get('category')
+        
+        flash('Produkt został dodany pomyślnie!', 'success')
+        return redirect(url_for('admin_panel'))
+        
+    products = [] 
+    return render_template('admin_panel.html', products=products)
+
+@app.route('/admin/edycja/<int:product_id>', methods=['GET', 'POST'])
+def admin_edit(product_id):
+    if not session.get('is_admin'):
+        return redirect(url_for('admin_login'))
+        
+    product = None 
+    
+    if request.method == 'POST':
+        product.name = request.form.get('name')
+        product.price = request.form.get('price')
+        product.image = request.form.get('image')
+        product.category = request.form.get('category')
+        
+        flash('Produkt został zaktualizowany!', 'success')
+        return redirect(url_for('admin_panel'))
+        
+    return render_template('admin_edit.html', product=product)
+
+@app.route('/admin/usun/<int:product_id>', methods=['POST'])
+def admin_delete(product_id):
+    if not session.get('is_admin'):
+        return redirect(url_for('admin_login'))
+        
+    flash('Produkt został usunięty!', 'success')
+    return redirect(url_for('admin_panel'))
+
+@app.route('/admin/logout')
+def admin_logout():
+    session.pop('is_admin', None)
+    return redirect(url_for('admin_login'))
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0",

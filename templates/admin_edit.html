@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edycja Produktu</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="header">
+        <h1>Edycja Produktu</h1>
+        <a href="{{ url_for('admin_panel') }}" style="color: white; text-decoration: underline;">Powrót do panelu</a>
+    </div>
+
+    <div class="content-wrapper" style="max-width: 600px; margin: 40px auto;">
+        <div class="podsumowanie-koszyka">
+            <h3>Modyfikujesz: {{ product.name }}</h3>
+            <form method="POST" class="formularz-zamowienia">
+                <div class="sekcja-formularza">
+                    <label>Nazwa produktu</label>
+                    <input type="text" name="name" value="{{ product.name }}" required>
+                    
+                    <label>Cena (zł)</label>
+                    <input type="text" name="price" value="{{ product.price }}" required>
+                    
+                    <label>Ścieżka/URL obrazka</label>
+                    <input type="text" name="image" value="{{ product.image }}" required>
+                    
+                    <label>Kategoria</label>
+                    <select name="category" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; background: white;">
+                        <option value="electronics" {% if product.category == 'electronics' %}selected{% endif %}>Elektronika</option>
+                        <option value="books" {% if product.category == 'books' %}selected{% endif %}>Książki</option>
+                        <option value="shoes" {% if product.category == 'shoes' %}selected{% endif %}>Buty</option>
+                        <option value="clothing" {% if product.category == 'clothing' %}selected{% endif %}>Ubrania</option>
+                        <option value="dla_ciebie" {% if product.category == 'dla_ciebie' %}selected{% endif %}>Dla ciebie</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-kup">ZAPISZ ZMIANY</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

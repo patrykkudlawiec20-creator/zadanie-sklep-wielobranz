@@ -1,20 +1,24 @@
 document.addEventListener("DOMContentLoaded", async () => {
-
-  
     const res = await fetch("/api/user");
     const data = await res.json();
-    let link = document.getElementById("zaloguj");
+    
+    let linkLogowania = document.getElementById("zaloguj");
+    let naglowekKonta = document.getElementById("zaloguj_konto");
+    let miejsceNaEmail = document.getElementById("pokaz-email");
 
     if (!data.email) {
-        if (document.getElementById('zaloguj_konto')) {
-            document.getElementById('zaloguj_konto').innerHTML = "Zaloguj";
+        if (naglowekKonta) {
+            naglowekKonta.innerHTML = "Zaloguj";
         }
     } else {
-        if (document.getElementById("zaloguj_konto")) {
-            document.getElementById("zaloguj_konto").innerText = data.email;
+        if (naglowekKonta) {
+            naglowekKonta.innerText = data.email;
         }
-        if (link) {
-            link.href = "/konto"; 
+        if (linkLogowania) {
+            linkLogowania.href = "/konto"; 
+        }
+        if (miejsceNaEmail) {
+            miejsceNaEmail.innerText = `Zalogowany jako: ${data.email}`;
         }
     }
 
@@ -31,23 +35,22 @@ document.addEventListener("DOMContentLoaded", async () => {
                 historyData.products.forEach(product => {
                     historyContainer.innerHTML += `
                         <div class="pos1">
-                            <img src="${product.image || 'https://via.placeholder.com/200'}" alt="${product.name}" height="200px">
+                            <img src="${product.image || 'https://via.placeholder.com/200'}" alt="${product.name}">
                             <h3>${product.name}</h3>
                             <p>Ilość: <strong>${product.quantity}</strong></p>
                             <p>Cena: <strong>${product.price}</strong> zł</p>
-                            <span class="status-completed" style="color: green; font-weight: bold;">Dostarczono (Completed)</span>
+                            <span class="status-completed" style="color: #10b981; font-weight: bold; margin-top: 10px;">Dostarczono</span>
                         </div>`;
                 });
             } else {
-                historyContainer.innerHTML = "<p>Nie masz jeszcze żadnych zakupionych produktów w historii.</p>";
+                historyContainer.innerHTML = "<p class='pusty-koszyk' style='grid-column: 1/-1;'>Nie masz jeszcze żadnych zakupionych produktów w historii.</p>";
             }
         } catch (error) {
             console.error("Błąd podczas pobierania historii:", error);
-            historyContainer.innerHTML = "<p>Nie udało się załadować historii zamówień.</p>";
+            historyContainer.innerHTML = "<p style='grid-column: 1/-1;'>Nie udało się załadować historii zamówień.</p>";
         }
     }
 });
-
 
 async function usunZKoszyka(productName) {
     if (confirm(`Czy chcesz usunąć ${productName} z koszyka?`)) {
